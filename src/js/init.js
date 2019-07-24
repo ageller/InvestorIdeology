@@ -96,6 +96,7 @@ function createHistogram(){
 
 function changeHistogram(arg){
 	console.log(arg)
+	showNames();
 	params.svg.selectAll('.bar').data(params[arg]);
 
 	//reset the y axis?
@@ -120,12 +121,13 @@ function checkSearchInput(event = null){
 function showNames(names = null){
 	d3.select('#searchList').selectAll('.listNames').remove();
 
-	d3.select('#searchList').selectAll('.listNames')
-		.data(names).enter()
-		.append('div')
-			.attr('class','listNames')
-			.text(function(d){return d})
-
+	if (names){
+		d3.select('#searchList').selectAll('.listNames')
+			.data(names).enter()
+			.append('div')
+				.attr('class','listNames')
+				.text(function(d){return d})
+	}
 }
 function createContainers(){
 	function createButton(parent, id, width, text, callback, arg){
