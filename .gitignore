@@ -14,3 +14,7 @@ Thumbs.db
 *ipynb_checkpoints*
 __pycache__
 *.pyc
+
+# data file #
+#################
+*.csv
