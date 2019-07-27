@@ -42,7 +42,14 @@
 	border-bottom: 1px solid black;
 	cursor:pointer;
 }
-.listNames:hover {
+.fundInfo {
+	font: 12px sans-serif;
+	font-family: sans-serif;
+	font-style: italic;
+	padding:4px;
+	padding-left:8px;
+}
+.listNamesHover:hover {
 	background-color: var(--hover-color);
 	/*color: var(--button-background-color);*/
 }
