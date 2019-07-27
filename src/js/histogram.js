@@ -98,7 +98,7 @@ function createHistogram(){
 
 
 function changeHistogram(arg){
-	console.log(arg)
+	//console.log(arg)
 
 	params.isMutual = false;
 	params.isPension = false;
