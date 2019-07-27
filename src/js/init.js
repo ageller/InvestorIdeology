@@ -1,3 +1,30 @@
+//get the position of a dom element on the page
+//https://www.kirupa.com/html5/get_element_position_using_javascript.htm
+function getPosition(el) {
+	var xPos = 0;
+	var yPos = 0;
+
+	while (el) {
+		if (el.tagName == "body") {
+			// deal with browser quirks with body/window/document and page scroll
+			var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+			var yScroll = el.scrollTop || document.documentElement.scrollTop;
+ 
+			xPos += (el.offsetLeft - xScroll + el.clientLeft);
+			yPos += (el.offsetTop - yScroll + el.clientTop);
+		} else {
+			// for all other non-BODY elements
+			xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+			yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+		}
+
+		el = el.offsetParent;
+	}
+	return {
+		x: xPos,
+		y: yPos
+	};
+}
 
 function createContainers(){
 	function createButton(parent, id, width, text, callback, arg){
@@ -24,14 +51,14 @@ function createContainers(){
 	}
 
 	//main container
-	var container = d3.select('body').append('div')
-		.attr('id','container')
+	params.container = d3.select('body').append('div')
+		.attr('id','visContainer')
 		.style('border','1px solid black')
 		.style('width', params.width + 'px')
 		.style('height', params.height + 'px')
 
 	//for the plot	
-	var plots = container.append('div')
+	var plots = params.container.append('div')
 		.attr('id','plotContainer')
 		.style('width', params.plotWidth + 'px')
 		.style('height', params.height + 'px')	
@@ -54,7 +81,7 @@ function createContainers(){
 		.attr('id', 'histogram')
 
 	//search box
-	var search = container.append('div')
+	var search = params.container.append('div')
 		.attr('id','searchContainer')
 		.style('width',params.searchWidth -1 + 'px' )
 		.style('height',params.height + 'px') 
@@ -76,9 +103,13 @@ function createContainers(){
 			d3.select(this)
 				.attr('value',null)
 		})
-		.on('keypress',function(){
-			checkSearchInput(d3.event);
+		.on('keydown',function(){
+			if (params.searchTimeout) clearTimeout(params.searchTimeout);
+			params.searchTimeout = setTimeout(checkSearchInput, 50);
 		})
+	//clear the input on any mouse click?
+	params.container.on('click', function(){clearSearch(event)});
+
 
 	var searchButton = 	search.append('div')
 		.attr('id', 'searchButton')
@@ -129,7 +160,7 @@ function init(data){
 }
 
 //runs on load
-d3.csv('src/data/positions.csv')
+d3.csv('src/data/positionsSorted.csv')
 	.then(function(data) {
 		init(data)
   })

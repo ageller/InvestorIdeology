@@ -8,6 +8,7 @@ function defineParams(){
 		this.inputData = null;
 
 		//this is the histogram DOM elements
+		this.container = null;
 		this.svg = null;
 
 		//duration for transitions
@@ -40,6 +41,11 @@ function defineParams(){
 		this.histMargin = {'top': 10, 'right': 15, 'bottom': 40, 'left': 15};
 		this.histWidth = this.plotWidth - this.histMargin.left - this.histMargin.right;
 		this.histHeight = this.height - this.buttonHeight - this.histMargin.top - this.histMargin.bottom;
+
+		//for searching
+		this.searchTimeout = null;
+		this.isPension = false;
+		this.isMutual = false;
 	};
 
 

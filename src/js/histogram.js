@@ -22,10 +22,12 @@ function binData(type = null){
 function createHistogram(){
 
 	//create the SVG element
+	var w = params.histWidth + params.histMargin.left + params.histMargin.right;
+	var h = params.histHeight + params.histMargin.top + params.histMargin.bottom;
 	params.svg = d3.select('#histogram')
 		.append('svg')
-			.attr('width', params.histWidth + params.histMargin.left + params.histMargin.right)
-			.attr('height', params.histHeight + params.histMargin.top + params.histMargin.bottom)
+			.attr('width', w + 'px')
+			.attr('height', h + 'px')
 			.append('g')
 				.attr('transform', 'translate(' + params.histMargin.left + ',' + params.histMargin.top + ')');
 
@@ -33,8 +35,8 @@ function createHistogram(){
 	params.svg.append('rect')
 		.attr('id','clickCatcher')
 		.attr('transform', 'translate(' + -params.histMargin.left + ',' + -params.histMargin.top + ')')
-		.attr('width','100%')
-		.attr('height','100%')
+		.attr('width',w + 'px')
+		.attr('height',h -1 + 'px') //for border
 		.attr('fill',params.backgroundColor)
 		.on('click',function(){
 			params.svg.selectAll('.bar').transition().duration(params.duration).style('fill', params.fillColor);
@@ -64,8 +66,9 @@ function createHistogram(){
 
 		// text label for the x axis
 	params.svg.append('text')             
-		.attr('transform', 'translate(' + (params.histWidth/2) + ' ,' + (params.histHeight + params.histMargin.top + 20) + ')')
+		.attr('transform', 'translate(' + (params.histWidth/2) + ',' + (params.histHeight + params.histMargin.top + 24) + ')')
 		.style('text-anchor', 'middle')
+		.style('font','16px sans-serif')
 		.text('X axis label')
 
 	// append the bar rectangles to the svg element
@@ -76,8 +79,8 @@ function createHistogram(){
 			.attr('class','bar')
 			.attr('x', 1)
 			.attr('transform', function(d) { return 'translate(' + params.xAxis(d.x0) + ',' + params.yAxis(d.length) + ')'; })
-			.attr('width', function(d) { return Math.max(params.xAxis(d.x1) - params.xAxis(d.x0) -3 ,0) ; }) //-val to give some separation between bins
-			.attr('height', function(d) { return params.histHeight - params.yAxis(d.length); })
+			.attr('width', function(d) { return Math.max(params.xAxis(d.x1) - params.xAxis(d.x0) -3 ,0) + 'px' ; }) //-val to give some separation between bins
+			.attr('height', function(d) { return params.histHeight - params.yAxis(d.length) + 'px'; })
 			.attr('stroke-width',1)
 			.attr('stroke', 'black')
 			.style('fill', params.fillColor)
@@ -96,6 +99,12 @@ function createHistogram(){
 
 function changeHistogram(arg){
 	console.log(arg)
+
+	params.isMutual = false;
+	params.isPension = false;
+	if (arg.includes('Mutual')) params.isMutual = true;
+	if (arg.includes('Pension')) params.isPension = true;
+
 	showNames();
 	params.svg.selectAll('.bar').data(params[arg]);
 
@@ -104,7 +113,23 @@ function changeHistogram(arg){
 
 	params.svg.selectAll('.bar').transition().duration(params.duration)
 		.attr('transform', function(d, i) { return 'translate(' + params.xAxis(d.x0) + ',' + params.yAxis(d.length) + ')'; })
-		.attr('height', function(d,i) { return params.histHeight - params.yAxis(d.length); })
+		.attr('height', function(d,i) { return params.histHeight - params.yAxis(d.length) + 'px'; })
 		.style('fill', params.fillColor)
 
+}
+
+function highlightBar(fund){
+
+	params.svg.selectAll('.bar').transition().duration(params.duration)
+		.style('fill',function(d){
+			var found = false;
+			d.forEach(function(dd){
+				if (dd['institutionname'] == fund['institutionname']) found = true;
+			})
+			if (found) {
+				return params.fillColor
+			} else {
+				return params.hoverColor
+			}
+		})
 }

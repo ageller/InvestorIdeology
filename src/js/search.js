@@ -1,62 +1,64 @@
+//search through the input object for names that match
 function checkSearchInput(event = null){
 	var value = document.getElementById('searchInput').value;
-	if (event != null) {
-		value += event.key;
+	//console.log("Searching", value)
+
+	//is there a faster way to do this? (maybe but this seems fast enough)
+	var funds;
+	if (value.length > 0){
+		funds = [];
+		params.inputData.forEach(function(d){
+			if (d['institutionname'].substring(0,value.length).toUpperCase() == value.toUpperCase()){
+				if ( (!params.isPension && !params.isMutual) ||
+				(params.isPension && d['institution_type2'] == 'Pension Funds') ||
+				(params.isMutual && d['institution_type2'] == 'Mutual Funds') ) {
+					funds.push(d);
+				}
+			} 
+		})
+	} else {
+		funds = null;
 	}
-	console.log('searching', value)
+	showNames(funds);
 
 }
 
 //show a list of names in the div below the search box
 function showNames(funds = null){
 	d3.select('#searchList').selectAll('.listNames').remove();
+	d3.select('#searchList').selectAll('.fundInfo').remove();
 
 	if (funds){
-		d3.select('#searchList').selectAll('.listNames')
-			.data(funds).enter()
-			.append('div')
-				.attr('class','listNames')
-				.classed('listNamesHover', true)
-				.attr('id',function(d) {return 'listNames' + d['institutionname'].replace(/[^a-zA-Z0-9]/g, "");})
-				.on('click', function(d) {showNameInfo(d);})
-				.text(function(d){return d['institutionname'];})
-	}
-}
-
-//get the position of a dom element on the page
-//https://www.kirupa.com/html5/get_element_position_using_javascript.htm
-function getPosition(el) {
-	var xPos = 0;
-	var yPos = 0;
-
-	while (el) {
-		if (el.tagName == "body") {
-			// deal with browser quirks with body/window/document and page scroll
-			var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
-			var yScroll = el.scrollTop || document.documentElement.scrollTop;
- 
-			xPos += (el.offsetLeft - xScroll + el.clientLeft);
-			yPos += (el.offsetTop - yScroll + el.clientTop);
+		if (funds.length > 0){
+			d3.select('#searchList').selectAll('.listNames')
+				.data(funds).enter()
+				.append('div')
+					.attr('class','listNames')
+					.classed('listNamesHover', true)
+					.attr('id',function(d) {return 'listNames' + d['institutionname'].replace(/[^a-zA-Z0-9]/g, "");})
+					.on('click', function(d) {
+						showNameInfo(d);
+						highlightBar(d);
+					})
+					.text(function(d){return d['institutionname'];})
 		} else {
-			// for all other non-BODY elements
-			xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
-			yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+			d3.select('#searchList').append('div')
+				.attr('class','fundInfo')
+				.style('color','gray')
+				.style('font-size','16px')
+				.text('No results')
 		}
-
-		el = el.offsetParent;
 	}
-	return {
-		x: xPos,
-		y: yPos
-	};
 }
+
+
 //show the type of fund for a given name (could add more info if desired)
 function showNameInfo(fund){
 	var id = fund['institutionname'].replace(/[^a-zA-Z0-9]/g, "")
 	var elm = d3.select('#listNames' + id);
-	var pos = getPosition(elm.node());
-	var bodyMargin = parseFloat(d3.select('body').style('margin-top'));
-
+	var posElm = getPosition(elm.node());
+	var posContainer = getPosition(params.container.node());
+	var posY = Math.max(posElm.y - params.buttonHeight - posContainer.y - 3, 0);  //-3 for the borders
 	//clear the funds
 	showNames(); 
 
@@ -65,12 +67,17 @@ function showNameInfo(fund){
 		.attr('id','listNames' + id)
 		.attr('class','listNames')
 		.classed('listNamesHover', false)
-		.style('border-top', '1px solid black')
-		.style('margin-top', pos.y - params.buttonHeight - bodyMargin - 3  + 'px') //2 for the borders
+		.style('margin-top', posY  + 'px') 
 		.text(fund['institutionname'])
 
+	var dur = 0;
+	if (posY > 0) {
+		d3.select('#listNames' + id).style('border-top', '1px solid black')
+		dur = params.duration;
+	}
+
 	//move it to the top of the div
-	d3.select('#listNames' + id).transition().duration(params.duration)
+	d3.select('#listNames' + id).transition().duration(dur)
 		.style('margin-top',0 + 'px')
 		.style('border-top',0 + 'px')
 		.style('border-bottom', 0 + 'px')
@@ -81,4 +88,8 @@ function showNameInfo(fund){
 				.attr('class','fundInfo')
 				.text(tp)
 		})
+}
+
+function clearSearch(event){
+	if (!event.target.id.includes('search')) document.getElementById('searchInput').value = null;
 }
