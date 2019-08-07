@@ -4,8 +4,16 @@
 	--background-color: #FFFFFF;
 	--button-foreground-color: #342F2E; /* "Rich Black 80" */
 	--button-background-color: #FFFFFF;
-	--highlight-color: #4E2A84; /* "Northwestern Purple" */
-	--hover-color: #B6ACD1; /* "Northwestern Purple 30" */
+	/*--highlight-color: #4E2A84; /* "Northwestern Purple" */
+	/*--hover-color: #B6ACD1;  /*"Northwestern Purple 30" */
+	/*--hover-color: #b5eb7e; /* insight green */
+	--highlight-color: #f87a62; /* insight orange */
+	/*--hover-color: #fab29d; /* insight salmon */
+	--hover-color: #f8c8ba; /* slightly lighter salmon */
+	/*--highlight-color: #fa96a7; /* insight pink */
+	/*--highlight-color: #82b3fe; /* insight blue */
+	/*--hover-color: #deadfe; /* insight purple */
+
 }
 
 #container {
