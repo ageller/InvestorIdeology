@@ -64,7 +64,7 @@ function createHistogram(){
 	// params.svg.append('g')
 	// 	.call(d3.axisLeft(params.yAxis));
 
-		// text label for the x axis
+	// text label for the x axis
 	params.svg.append('text')             
 		.attr('transform', 'translate(' + (params.histWidth/2) + ',' + (params.histHeight + params.histMargin.top + 24) + ')')
 		.style('text-anchor', 'middle')
@@ -108,8 +108,8 @@ function changeHistogram(arg){
 	showNames();
 	params.svg.selectAll('.bar').data(params[arg]);
 
-	//reset the y axis?
-	params.yAxis.domain([0, d3.max(params[arg], function(d) { return d.length; })]);   
+	//rescale the y axis?
+	//params.yAxis.domain([0, d3.max(params[arg], function(d) { return d.length; })]);   
 
 	params.svg.selectAll('.bar').transition().duration(params.duration)
 		.attr('transform', function(d, i) { return 'translate(' + params.xAxis(d.x0) + ',' + params.yAxis(d.length) + ')'; })
