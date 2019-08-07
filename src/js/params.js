@@ -33,11 +33,15 @@ function defineParams(){
 		this.yAxis = null;
 
 		//dimensions of the containers
-		this.plotWidth = 460;
-		this.searchWidth = 300;
-		this.width = this.plotWidth + this.searchWidth
+		this.width = 760;
+		this.width0 = 760;
+		this.plotWidthRatio = 460/760;
+		this.plotWidth = this.width*this.plotWidthRatio;
+		this.searchWidth = this.width - this.plotWidth;
 		this.height = 500;
-		this.buttonHeight = 60
+		this.height0 = 500;
+		this.buttonHeight = 60;
+		this.buttonFontSize = this.buttonHeight*0.6;
 		this.histMargin = {'top': 10, 'right': 15, 'bottom': 40, 'left': 15};
 		this.histWidth = this.plotWidth - this.histMargin.left - this.histMargin.right;
 		this.histHeight = this.height - this.buttonHeight - this.histMargin.top - this.histMargin.bottom;
@@ -46,6 +50,12 @@ function defineParams(){
 		this.searchTimeout = null;
 		this.isPension = false;
 		this.isMutual = false;
+
+		//check if mobile (will be set in init)
+		this.isMobile = false;
+
+		//check if we need to resize (will be set in init)
+		this.needsResize = false;
 	};
 
 

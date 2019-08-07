@@ -72,9 +72,13 @@ function createHistogram(){
 		.text('X axis label')
 
 	// append the bar rectangles to the svg element
+	// first, check which data set to use (in case of resize)
+	var dataSet = params.histAll;
+	if (params.isPension) dataSet = params.histPension;
+	if (params.isMutual) dataSet = params.histMutual;
 	var fillColor = getComputedStyle(document.documentElement).getPropertyValue('--plot-background-color');
 	params.svg.selectAll('.bar')
-		.data(params.histAll).enter()
+		.data(dataSet).enter()
 		.append('rect')
 			.attr('class','bar')
 			.attr('x', 1)
