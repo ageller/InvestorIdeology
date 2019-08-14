@@ -20,7 +20,7 @@ function binData(type = null){
 }
 
 function createHistogram(){
-
+	//console.log('histogram', params.histHeight)
 	//create the SVG element
 	var w = params.histWidth + params.histMargin.left + params.histMargin.right;
 	var h = params.histHeight + params.histMargin.top + params.histMargin.bottom;

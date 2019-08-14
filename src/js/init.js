@@ -28,27 +28,31 @@ function getPosition(el) {
 
 function getContainerSize(){
 	params.needsResize = false;
-	//calculate the new widths
-	params.width = params.width0;
+
+	//get the parent size
 	var parent = d3.select('#visContainer').node().parentNode;
 	var parentWidth = parent.getBoundingClientRect().width;
 	var parentHeight = parent.getBoundingClientRect().height;
 
-	if (params.width > parentWidth - 20){//allow for some margin?
+	//calculate the new widths
+	//params.width = params.width0;
+	if (params.width0 >= parentWidth - 20){//allow for some margin?
 		params.needsResize = true;
 		params.width = parentWidth - 20;
 		params.plotWidth = params.width*params.plotWidthRatio;
-	}
-	params.searchWidth = params.width - params.plotWidth; 
-	params.histWidth = params.plotWidth - params.histMargin.left - params.histMargin.right;
+		params.searchWidth = params.width - params.plotWidth; 
+		params.histWidth = params.plotWidth - params.histMargin.left - params.histMargin.right;
+		}
+
 
 	//calculate new heights
-	params.height = params.height0;
-	if (params.height > parentHeight - 20){ //allow for some margin?
+	//params.height = params.height0;
+	if (params.height0 > parentHeight - 20){ //allow for some margin?
 		params.needsResize = true;
 		params.height = parentHeight - 20;
+		params.histHeight = params.height - params.buttonHeight - params.histMargin.top - params.histMargin.bottom;
 	} 
-	params.histHeight = params.height - params.buttonHeight - params.histMargin.top - params.histMargin.bottom;
+	//console.log('parent', parentWidth, parentHeight, params.needsResize, params.histHeight)
 }
 function resizeContainers(){
 
@@ -61,8 +65,6 @@ function resizeContainers(){
 		//create the containers
 		createContainers();
 
-		//bin the data
-		createHistogram();
 	}
 	
 }
@@ -226,6 +228,9 @@ function createContainers(){
 		.style('width',params.searchWidth -1 + 'px' )
 
 	resizeButtonFont();
+
+	//bin the data and make this histogram
+	createHistogram();
 }
 
 //runs directly after the data is read in, and initializes everything
@@ -239,8 +244,6 @@ function init(data){
 	getContainerSize();
 	createContainers();
 
-	//bin the data
-	createHistogram();
 
 }
 
