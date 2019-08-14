@@ -30,9 +30,13 @@ function getContainerSize(){
 	params.needsResize = false;
 	//calculate the new widths
 	params.width = params.width0;
-	if (params.width > window.innerWidth - 20){//allow for some margin?
+	var parent = d3.select('#visContainer').node().parentNode;
+	var parentWidth = parent.getBoundingClientRect().width;
+	var parentHeight = parent.getBoundingClientRect().height;
+
+	if (params.width > parentWidth - 20){//allow for some margin?
 		params.needsResize = true;
-		params.width = window.innerWidth - 20;
+		params.width = parentWidth - 20;
 		params.plotWidth = params.width*params.plotWidthRatio;
 	}
 	params.searchWidth = params.width - params.plotWidth; 
@@ -40,9 +44,9 @@ function getContainerSize(){
 
 	//calculate new heights
 	params.height = params.height0;
-	if (params.height > window.innerHeight - 20){ //allow for some margin?
+	if (params.height > parentHeight - 20){ //allow for some margin?
 		params.needsResize = true;
-		params.height = window.innerHeight - 20;
+		params.height = parentHeight - 20;
 	} 
 	params.histHeight = params.height - params.buttonHeight - params.histMargin.top - params.histMargin.bottom;
 }
@@ -51,7 +55,8 @@ function resizeContainers(){
 	getContainerSize();
 	if (params.needsResize){
 		//remove the container
-		d3.select('#visContainer').remove();
+		d3.select('#visContainer').selectAll('div').remove();
+		d3.select('#visContainer').selectAll('svg').remove();
 
 		//create the containers
 		createContainers();
@@ -124,8 +129,7 @@ function createContainers(){
 	}
 
 	//main container
-	params.container = d3.select('body').append('div')
-		.attr('id','visContainer')
+	params.container = d3.select('#visContainer')
 		.style('border','1px solid black')
 		.style('width', params.width + 'px')
 		.style('height', params.height + 'px')
