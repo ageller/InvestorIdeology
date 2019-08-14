@@ -6,14 +6,25 @@
 	--button-background-color: #FFFFFF;
 	/*--highlight-color: #4E2A84; /* "Northwestern Purple" */
 	/*--hover-color: #B6ACD1;  /*"Northwestern Purple 30" */
-	/*--hover-color: #b5eb7e; /* insight green */
-	--highlight-color: #f87a62; /* insight orange */
 	/*--hover-color: #fab29d; /* insight salmon */
-	--hover-color: #f8c8ba; /* slightly lighter salmon */
+
 	/*--highlight-color: #fa96a7; /* insight pink */
-	/*--highlight-color: #82b3fe; /* insight blue */
 	/*--hover-color: #deadfe; /* insight purple */
 
+	/* --highlight-color: #23505a; /* darker blue from same insight image*/
+	/* --hover-color: #60a5b1; /*  blue from insight image*/
+
+	--highlight-color: #3b826b; /* darker green from same insight image*/
+	--hover-color: #a8ddc0; /*  green from insight image*/
+
+	/*--highlight-color: #0065fc; /* slightly darker blue */
+	/*--hover-color: #82b3fe; /* insight blue */
+
+	/*--highlight-color: #769953; /* slightly darker green */
+	/*--hover-color: #b5eb7e; /* insight green */
+
+	/* --highlight-color: #f87a62; /* insight orange */
+	/*--hover-color: #f8c8ba; /* slightly lighter salmon */
 }
 
 #container {
