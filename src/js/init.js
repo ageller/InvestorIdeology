@@ -176,7 +176,8 @@ function createContainers(){
 		.attr('placeholder','Search')
 		.attr('autocomplete','off')
 		.style('float', 'left')
-		.style('width',params.searchWidth - params.buttonHeight - 1 + 'px' )
+		//.style('width',params.searchWidth - params.buttonHeight - 1 + 'px' )
+		.style('width',params.searchWidth - 1 + 'px' )
 		.style('height',params.buttonHeight + 1 + 'px') //not sure why I need the +1 here?
 		.style('font-size',params.buttonFontSize + 'px')
 		.style('line-height',params.buttonHeight + 'px')
@@ -194,31 +195,31 @@ function createContainers(){
 	params.container.on('click', function(){clearSearch(event)});
 
 
-	var searchButton = 	search.append('div')
-		.attr('id', 'searchButton')
-		.attr('class','button')
-		.classed('buttonHover', true)
-		.style('width', params.buttonHeight-1 + 'px')
-		.style('height', params.buttonHeight + 'px')
-		.on('click', function(){
-			checkSearchInput();
-		})
-		.on('mousedown', function(){
-			d3.select(this)
-				.classed('buttonHover', false)
-				.classed('buttonClicked', true);
-		})
-		.on('mouseup', function(){
-			d3.select(this)
-				.classed('buttonHover', true)
-				.classed('buttonClicked', false);
-		})
+	// var searchButton = 	search.append('div')
+	// 	.attr('id', 'searchButton')
+	// 	.attr('class','button')
+	// 	.classed('buttonHover', true)
+	// 	.style('width', params.buttonHeight-1 + 'px')
+	// 	.style('height', params.buttonHeight + 'px')
+	// 	.on('click', function(){
+	// 		checkSearchInput();
+	// 	})
+	// 	.on('mousedown', function(){
+	// 		d3.select(this)
+	// 			.classed('buttonHover', false)
+	// 			.classed('buttonClicked', true);
+	// 	})
+	// 	.on('mouseup', function(){
+	// 		d3.select(this)
+	// 			.classed('buttonHover', true)
+	// 			.classed('buttonClicked', false);
+	// 	})
 
-	searchButton.append('i')
-		.attr('id','searchIcon')
-		.attr('class', 'fa fa-search')
-		.style('font-size',params.buttonFontSize + 'px')
-		.style('line-height',params.buttonHeight + 'px')
+	// searchButton.append('i')
+	// 	.attr('id','searchIcon')
+	// 	.attr('class', 'fa fa-search')
+	// 	.style('font-size',params.buttonFontSize + 'px')
+	// 	.style('line-height',params.buttonHeight + 'px')
 
 	search.append('div')
 		.attr('id','searchList')
