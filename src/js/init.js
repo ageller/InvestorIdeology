@@ -52,7 +52,7 @@ function getContainerSize(){
 		params.height = parentHeight - 20;
 		params.histHeight = params.height - params.buttonHeight - params.histMargin.top - params.histMargin.bottom;
 	} 
-	//console.log('parent', parent, parentWidth, parentHeight, params.needsResize, params.histHeight)
+	console.log('parent', parent, parentWidth, parentHeight, params.needsResize, params.histHeight)
 }
 function resizeContainers(){
 
