@@ -33,13 +33,13 @@ function defineParams(){
 		this.yAxis = null;
 
 		//dimensions of the containers
-		this.width = 760;
-		this.width0 = 760;
-		this.plotWidthRatio = 460/760;
+		this.width = window.innerWidth;//760;
+		this.width0 = window.innerWidth;//760;
+		this.plotWidthRatio = 0.7;//460/760;
 		this.plotWidth = this.width*this.plotWidthRatio;
 		this.searchWidth = this.width - this.plotWidth;
-		this.height = 500;
-		this.height0 = 500;
+		this.height = window.innerHeight;//500;
+		this.height0 = window.innerHeight;//500;
 		this.buttonHeight = 60;
 		this.buttonFontSize = this.buttonHeight*0.6;
 		this.histMargin = {'top': 10, 'right': 15, 'bottom': 40, 'left': 15};

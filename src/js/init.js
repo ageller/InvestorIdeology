@@ -42,7 +42,7 @@ function getContainerSize(){
 		params.plotWidth = params.width*params.plotWidthRatio;
 		params.searchWidth = params.width - params.plotWidth; 
 		params.histWidth = params.plotWidth - params.histMargin.left - params.histMargin.right;
-		}
+	}
 
 
 	//calculate new heights
@@ -52,7 +52,7 @@ function getContainerSize(){
 		params.height = parentHeight - 20;
 		params.histHeight = params.height - params.buttonHeight - params.histMargin.top - params.histMargin.bottom;
 	} 
-	//console.log('parent', parentWidth, parentHeight, params.needsResize, params.histHeight)
+	//console.log('parent', parent, parentWidth, parentHeight, params.needsResize, params.histHeight)
 }
 function resizeContainers(){
 
@@ -248,7 +248,8 @@ function init(data){
 }
 
 //runs on load
-d3.csv('src/data/positionsSorted.csv')
+//d3.csv('src/data/positionsSorted.csv')
+d3.csv('src/data/dummyDataCraft.csv')
 	.then(function(data) {
 		init(data)
   })
