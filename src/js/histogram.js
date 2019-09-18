@@ -89,8 +89,12 @@ function createHistogram(){
 			.attr('stroke', 'black')
 			.style('fill', params.fillColor)
 			.style('cursor','pointer')
-			//.on('mouseover', function() { d3.select(this).style('fill', params.hoverColor);})
-			//.on('mouseout', function() { d3.select(this).style('fill', params.fillColor);})
+			.on('mouseover', function() { 
+				d3.select(this).attr('stroke-width', 3);
+			})
+			.on('mouseout', function() { 
+				d3.select(this).attr('stroke-width', 1);
+			})
 			.on('click',function(d){
 				var names = [];
 				d3.selectAll('.bar').transition().duration(params.duration).style('fill', params.hoverColor);
